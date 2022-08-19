@@ -2,6 +2,8 @@
 
 namespace Eclair\Routing;
 
+use Eclair\Routing\Middleware;
+
 class RequestContext
 {
     public $method;
@@ -28,27 +30,26 @@ class RequestContext
         $urlParts = explode('/', $url);
         $urlPatternParts = explode('/', $this->path);
 
-        if(count($urlParts) === count($urlPatternParts)) {
+        if (count($urlParts) === count($urlPatternParts)) {
             $urlParams = [];
 
-            foreach($urlPatternParts as $key => $part) {
-                if(preg_match('/^{.*\}$/', $part)) {
+            foreach ($urlPatternParts as $key => $part) {
+                if (preg_match('/^\{.*\}$/', $part)) {
                     $urlParams[$key] = $part;
                 } else {
-                    if($urlParts[$key] !== $part) {
+                    if ($urlParts[$key] !== $part) {
                         return null;
                     }
                 }
             }
-
             return count($urlParams) < 1 ? [] : array_map(fn ($k) => $urlParts[$k], array_keys($urlParams));
         }
     }
 
     public function runMiddlewares()
     {
-        foreach($this->middlewares as $middleware) {
-            if(! $middleware::process()) {
+        foreach ($this->middlewares as $middleware) {
+            if (! $middleware::process()) {
                 return false;
             }
         }

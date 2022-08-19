@@ -15,14 +15,14 @@ class Adaptor
 
     public static function exec($query, $params = [])
     {
-        if(self::$sth = self::$pdo->prepare($query)) {
+        if (self::$sth = self::$pdo->prepare($query)) {
             return self::$sth->execute($params);
         }
     }
 
     public static function getAll($query, $params = [], $classname = 'stdClass')
     {
-        if(self::exec($query, $params)) {
+        if (self::exec($query, $params)) {
             return self::$sth->fetchAll(\PDO::FETCH_CLASS, $classname);
         }
     }

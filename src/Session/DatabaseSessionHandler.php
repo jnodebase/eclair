@@ -20,8 +20,8 @@ class DatabaseSessionHandler implements \SessionHandlerInterface
     {
         $data = current(Adaptor::getAll('SELECT * FROM sessions WHERE `id` = ?', [ $id ]));
 
-        if($data) {
-            $payload = $data->payload;
+        if ($data) {
+            $payload =  $data->payload;
         } else {
             Adaptor::exec('INSERT INTO sessions(`id`) VALUES(?)', [ $id ]);
         }
@@ -40,10 +40,10 @@ class DatabaseSessionHandler implements \SessionHandlerInterface
 
     public function gc($maxlifetime): bool
     {
-        if($sessions = Adaptor::getAll('SELECT * FROM sessions')) {
-            foreach($sessions as $session) {
-                $timestamp = strtotime($session->create_at);
-                if(time() - $timestamp > $maxlifetime) {
+        if ($sessions = Adaptor::getAll('SELECT * FROM sessions')) {
+            foreach ($sessions as $session) {
+                $timestamp = strtotime($session->created_at);
+                if (time() - $timestamp > $maxlifetime) {
                     $this->destroy($session->id);
                 }
             }
