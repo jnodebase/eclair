@@ -1,0 +1,19 @@
+{
+    "name": "jnodebase/eclair",
+    "description": "Eclair is a Simple PHP micro framework",
+    "type": "library",
+    "license": "MIT",
+    "version": "1.0.0",
+    "autoload": {
+        "psr-4": {
+            "Eclair\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "jnodebase",
+            "email": "ehdcjf0903@naver.com"
+        }
+    ],
+    "require": {}
+}
